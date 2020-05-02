@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 using ContosoUniversity.Services;
 using ContosoUniversity.DTOs;
@@ -25,8 +20,14 @@ namespace ContosoUniversity.Controllers
         }
 
         // GET: Students
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
+
+            if (id != null)
+            {
+                var dataCourse = await _studentService.GetStudentsByStudent(id.Value);
+                ViewBag.Courses = dataCourse.Select(x => mapper.Map<CourseDTO>(x)).ToList();
+            }
             var data = await _studentService.GetAll();
 
             var listStudents = data.Select(x => mapper.Map<StudentDTO>(x)).ToList();

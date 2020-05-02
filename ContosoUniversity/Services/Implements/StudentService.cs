@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ContosoUniversity.Models;
 using ContosoUniversity.Repositories;
 
+
 namespace ContosoUniversity.Services.Implements
 {
     public class StudentService : GenericService<Student>, IStudentService
@@ -16,5 +17,9 @@ namespace ContosoUniversity.Services.Implements
             this.studentRepository = studentRepository;
         }
 
+        public async Task<IEnumerable<Course>> GetStudentsByStudent(int id)
+        {
+            return await studentRepository.GetStudentsByStudent(id);
+        }
     }
 }

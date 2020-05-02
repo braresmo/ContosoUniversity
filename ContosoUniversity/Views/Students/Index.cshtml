@@ -25,25 +25,46 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstMidName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnrollmentDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstMidName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EnrollmentDate)
+                </td>
+                <td>
+                    <a asp-action="Index" asp-route-id="@item.ID">Select</a>|
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
 
-}
+        }
+        @if (ViewBag.Courses != null)
+        {
 
+            var listCourses = (IEnumerable<ContosoUniversity.DTOs.CourseDTO>)ViewBag.Courses;
+
+
+            <h3>Students Enrolled in Selected Course</h3>
+
+            <table class="table">
+                <tr>
+                    <th>FullName</th>
+                </tr>
+                @foreach (var item in listCourses)
+                {
+                    <tr>
+                        <td>@item.Title @item.Credits</td>
+                    </tr>
+                }
+            </table>
+        }
     </tbody>
 </table>

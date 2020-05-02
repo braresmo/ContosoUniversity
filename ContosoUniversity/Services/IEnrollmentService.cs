@@ -7,8 +7,7 @@ using ContosoUniversity.Services.Implements;
 
 namespace ContosoUniversity.Services
 {
-    public interface IStudentService : IGenericService<Student>
+   public interface IEnrollmentService : IGenericService<Enrollment>
     {
-        Task<IEnumerable<Course>> GetStudentsByStudent(int id);
     }
 }

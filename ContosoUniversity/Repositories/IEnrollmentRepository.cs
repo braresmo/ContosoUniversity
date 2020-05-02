@@ -6,8 +6,7 @@ using ContosoUniversity.Models;
 
 namespace ContosoUniversity.Repositories
 {
-    public interface IStudentRepository : IGenericRepository<Student>
+    public interface IEnrollmentRepository :IGenericRepository<Enrollment>
     {
-        Task<IEnumerable<Course>> GetStudentsByStudent(int id);
     }
 }

@@ -9,5 +9,6 @@ namespace ContosoUniversity.Services
 {
    public interface IEnrollmentService : IGenericService<Enrollment>
     {
+        Task<List<Enrollment>> GetEnrollmentsByCoursestudent();
     }
 }

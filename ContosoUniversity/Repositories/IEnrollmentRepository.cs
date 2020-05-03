@@ -8,5 +8,6 @@ namespace ContosoUniversity.Repositories
 {
     public interface IEnrollmentRepository :IGenericRepository<Enrollment>
     {
+        Task<List<Enrollment>> GetEnrollmentsByCoursestudent();
     }
 }

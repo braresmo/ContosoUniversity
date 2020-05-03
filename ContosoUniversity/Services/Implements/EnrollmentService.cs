@@ -13,7 +13,12 @@ namespace ContosoUniversity.Services.Implements
 
         public EnrollmentService(IEnrollmentRepository enrollmentRepository) : base(enrollmentRepository)
         {
-                
+            this.enrollmentRepository = enrollmentRepository;
+        }
+
+        public async Task<List<Enrollment>> GetEnrollmentsByCoursestudent()
+        {
+            return await enrollmentRepository.GetEnrollmentsByCoursestudent();
         }
     }
 }

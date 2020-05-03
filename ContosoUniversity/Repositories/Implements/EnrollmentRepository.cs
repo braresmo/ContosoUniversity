@@ -17,7 +17,7 @@ namespace ContosoUniversity.Repositories.Implements
             this.schoolContext = schoolContext;
         }
 
-        public new async Task<List<Enrollment>> GetAll()
+        public async Task<List<Enrollment>> GetEnrollmentsByCoursestudent()
         {
             var listEnrollments = await schoolContext.Enrollments
                 .Include(x => x.Course)

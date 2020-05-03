@@ -1,50 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ContosoUniversity.Services;
 using ContosoUniversity.Models;
+using ContosoUniversity.DTOs;
+using AutoMapper;
 
 namespace ContosoUniversity.Controllers
 {
     public class EnrollmentsController : Controller
     {
-        private IEnrollmentService enrollmentService;
-        private IStudentService studentService;
-        private ICourseService courseService;
+        private readonly IEnrollmentService enrollmentService;
+        private readonly IStudentService studentService;
+        private readonly ICourseService courseService;
+        private readonly IMapper mapper;
 
-        public EnrollmentsController(IEnrollmentService enrollmentService , IStudentService studentService, ICourseService courseService)
+        public EnrollmentsController(IEnrollmentService enrollmentService , IStudentService studentService, ICourseService courseService, IMapper mapper)
         {
             this.enrollmentService = enrollmentService;
             this.studentService = studentService;
             this.courseService = courseService;
+            this.mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            var listEntollments = await enrollmentService.GetAll();
+            var data = await enrollmentService.GetEnrollmentsByCoursestudent();
+            var listEntollments = data.Select(x => mapper.Map<EnrollmentDTO>(x)).ToList();
             return View(listEntollments);
         }
 
         public async Task <ActionResult> Create()
         {
-            ViewBag.Courses = await courseService.GetAll();
-            ViewBag.Students = await studentService.GetAll();
+            var dataCourses = await courseService.GetAll();
+            ViewBag.Courses = dataCourses.Select(x => mapper.Map<CourseDTO>(x)).ToList();
+            var dataStudents = await studentService.GetAll();
+            ViewBag.Students = dataStudents.Select(x => mapper.Map<StudentDTO>(x)).ToList();
 
 
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Enrollment model)
+        public async Task<ActionResult> Create(EnrollmentDTO enrollmentDTO)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            if (!ModelState.IsValid) {
 
-            await enrollmentService.Insert(model);
+                var enrollment = mapper.Map<Enrollment>(enrollmentDTO);
+                await enrollmentService.Insert(enrollment);
+                return RedirectToAction(nameof(Index));
 
-            return RedirectToAction("Index");
+            }
+            return View(enrollmentDTO);
+
+
         }
     }
 }

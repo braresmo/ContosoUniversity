@@ -19,5 +19,14 @@ namespace ContosoUniversity.DTOs
         [Required(ErrorMessage = "The EnrollmentDate is Required")]
         [Display(Name = "EnrollmentDate")]
         public DateTime EnrollmentDate { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return string.Format("{0} {1}", LastName, FirstMidName);
+
+            }
+        }
     }
 }

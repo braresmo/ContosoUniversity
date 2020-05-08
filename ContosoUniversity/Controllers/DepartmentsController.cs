@@ -108,7 +108,6 @@ namespace ContosoUniversity.Controllers
             //departmentDTO.Budget = Convert.ToDecimal(departmentDTO.Budget);
             if (ModelState.IsValid)
             {
-
                 var department = mapper.Map<Department>(departmentDTO);
                 department = await departmentService.Update(department);
                 return RedirectToAction(nameof(Index));
